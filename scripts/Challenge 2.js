@@ -23,7 +23,7 @@ console.log(checkTypeNumber(3));
 
 // 3
 function checkEmail(email) {
-  if (typeof email !== "string") return;
+  if (typeof email !== "string") return "Error: Invalid data type.";
 
   const EMAIL_REGEX =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -39,7 +39,7 @@ console.log(checkEmail("sda!@gmail.com"));
 
 // 4
 function isValidPassword(pass) {
-  if (typeof pass !== "string") return;
+  if (typeof pass !== "string") return "Error: Invalid data type.";
 
   const LOWER_REGEX = /[a-z]/g;
   const UPPER_REGEX = /[A-Z]/g;
@@ -60,7 +60,10 @@ function getSplitName(personName) {
   if (typeof personName !== "string") return "Error: Invalid Type.";
   if (personName.length === 0) return "Error:no characters.";
 
-  let splitName = personName.split(" ");
+  let splitName = personName.split(" ").filter((item) => {
+    return item.length > 0;
+  });
+
   let resultName = {
     firstName: null,
     middleName: null,
@@ -86,12 +89,18 @@ console.log(getSplitName("Auriel Harlih Rizkinanda"));
 
 // 6
 function getAngkaTerbesarKedua(dataNumbers) {
-  return dataNumbers.sort(function (a, b) {
-    return b - a;
-  })[1];
+  let sortedNumber = dataNumbers
+    .filter((value, index) => {
+      return dataNumbers.indexOf(value) === index;
+    })
+    .sort(function (a, b) {
+      return b - a;
+    });
+
+  return sortedNumber[1];
 }
 
-console.log(getAngkaTerbesarKedua([5, 2, 3, 1, 4]));
+console.log(getAngkaTerbesarKedua([5, 5, 2, 3, 1, 4]));
 
 // 7
 function getTotalPenjualan(datas) {
