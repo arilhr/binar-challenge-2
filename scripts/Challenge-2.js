@@ -25,8 +25,7 @@ console.log(checkTypeNumber(3));
 function checkEmail(email) {
   if (typeof email !== "string") return "Error: Invalid data type.";
 
-  const EMAIL_REGEX =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  const EMAIL_REGEX = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
 
   if (EMAIL_REGEX.test(email)) {
     return "VALID";
