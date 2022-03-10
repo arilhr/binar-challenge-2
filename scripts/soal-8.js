@@ -38,57 +38,62 @@ const dataPenjualanNovel = [
 ];
 
 function getInfoPenjualan(datas) {
-  let totalKeuntungan = 0;
-  let totalModal = 0;
-  let produkTerlaris = "";
+  const result = {
+    totalKeuntungan: 0,
+    totalModal: 0,
+    persentaseKeuntungan: '',
+    produkBukuTerlaris: '',
+    penulisTerlaris: ''
+  }
+
   let jumlahProdukTerlaris = 0;
-  let penulisTerlaris = "";
   let jumlahPenulisTerlaris = 0;
 
   datas.forEach((data) => {
     // hitung total keuntungan
-    totalKeuntungan +=
+    result.totalKeuntungan +=
       data.hargaJual * data.totalTerjual -
       data.hargaBeli * (data.sisaStok + data.totalTerjual);
 
     // hitung total modal
-    totalModal += data.hargaBeli * (data.totalTerjual + data.sisaStok);
+    result.totalModal += data.hargaBeli * (data.totalTerjual + data.sisaStok);
 
     // cek produk terlaris
     if (data.totalTerjual > jumlahProdukTerlaris) {
-      produkTerlaris = data.namaProduk;
+      result.produkBukuTerlaris = data.namaProduk;
       jumlahProdukTerlaris = data.totalTerjual;
     }
 
     // cek penulis terlaris
-    let banyakProdukPenulisTerjual = 0;
-    datas
+    let banyakProdukPenulisTerjual = datas
       .filter((item) => {
         return item.penulis === data.penulis;
       })
-      .forEach((item) => {
-        banyakProdukPenulisTerjual += item.totalTerjual;
+      .reduce((prevValue, currentVal) => {
+        return prevValue.totalTerjual + currentVal.totalTerjual;
       });
 
     if (banyakProdukPenulisTerjual > jumlahPenulisTerlaris) {
-      penulisTerlaris = data.penulis;
+      result.penulisTerlaris = data.penulis;
       jumlahPenulisTerlaris = banyakProdukPenulisTerjual;
     }
   });
 
-  return {
-    totalKeuntungan: Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(totalKeuntungan),
-    totalModal: Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(totalModal),
-    persentaseKeuntungan: (totalKeuntungan / totalModal) * 100 + "%",
-    produkBukuTerlaris: produkTerlaris,
-    penulisTerlaris: penulisTerlaris,
-  };
+  // hitung persentase keuntungan
+  result.persentaseKeuntungan = result.totalKeuntungan / result.totalModal * 100 + "%";
+
+  // convert to IDR
+  result.totalKeuntungan = Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  }).format(result.totalKeuntungan);
+
+  result.totalModal = Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  }).format(result.totalModal);
+
+  return result;
 }
 
 // TESTING
