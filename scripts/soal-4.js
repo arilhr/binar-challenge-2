@@ -1,5 +1,6 @@
 function isValidPassword(pass) {
-  if (typeof pass !== "string") return "Error: Invalid data type.";
+  if (typeof (pass) === "undefined") return "Error: parameter undefined.";
+  if (typeof (pass) !== "string") return "Error: Invalid data type.";
 
   const LOWER_REGEX = /[a-z]/g;
   const UPPER_REGEX = /[A-Z]/g;
@@ -13,4 +14,10 @@ function isValidPassword(pass) {
   );
 }
 
-console.log(isValidPassword("passworD123"));
+// TESTING
+console.log(isValidPassword("Password2022"));
+console.log(isValidPassword("password2022"));
+console.log(isValidPassword("p@ssword"));
+console.log(isValidPassword("Pass2"));
+console.log(isValidPassword(0));
+console.log(isValidPassword());

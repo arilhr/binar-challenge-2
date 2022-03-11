@@ -1,4 +1,6 @@
 function getAngkaTerbesarKedua(dataNumbers) {
+  if (typeof (dataNumbers) === "undefined") return "Error: parameter undefined.";
+
   let sortedNumber = dataNumbers
     .filter((value, index) => {
       return dataNumbers.indexOf(value) === index;
@@ -10,4 +12,8 @@ function getAngkaTerbesarKedua(dataNumbers) {
   return sortedNumber[1];
 }
 
-console.log(getAngkaTerbesarKedua([5, 5, 2, 3, 1, 4]));
+const dataAngka = [9,4,7,7,4,3,2,2,8];
+
+console.log(getAngkaTerbesarKedua(dataAngka));
+console.log(getAngkaTerbesarKedua());
+
