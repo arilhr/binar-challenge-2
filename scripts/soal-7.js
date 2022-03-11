@@ -1,4 +1,6 @@
 function hitungTotalPenjualan(dataPenjualan) {
+  if (typeof (dataPenjualan) === "undefined") return "Error: parameter undefined.";
+
   let totalPenjualan = 0;
 
   dataPenjualan.forEach((data) => {

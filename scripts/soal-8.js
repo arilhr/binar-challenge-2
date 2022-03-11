@@ -38,6 +38,8 @@ const dataPenjualanNovel = [
 ];
 
 function getInfoPenjualan(datas) {
+  if (typeof (datas) === "undefined") return "Error: parameter undefined.";
+
   const result = {
     totalKeuntungan: 0,
     totalModal: 0,
